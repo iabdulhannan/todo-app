@@ -1,7 +1,7 @@
 'use client'
 import Todo from "./todo";
 import {useEffect, useState} from "react";
-
+import LM from 'localstorage-memory';
 // const getTodos = async () => {
 //   let todos = await fetch("http://localhost:3000/api/todo/list");
 //   return todos.json();
@@ -9,6 +9,13 @@ import {useEffect, useState} from "react";
 
 
 export default function TodoList() {
+  let localStorage;
+
+  if (typeof window !== "undefined") {
+    localStorage = window.localStorage;
+  } else {
+    localStorage = LM;
+  }
 
   const [todos, setTodos] = useState([]);
   useEffect(() => {
