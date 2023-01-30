@@ -3,14 +3,32 @@
 import {useRouter} from "next/navigation";
 import {Checkbox} from "@material-tailwind/react";
 
-async function update(id, isDone, refresh) {
-  await fetch(`/api/todo/update`, {
-    method: "POST",
-    body: JSON.stringify({id, isDone}),
+// async function update(id, isDone, refresh) {
+//   await fetch(`/api/todo/update`, {
+//     method: "POST",
+//     body: JSON.stringify({id, isDone}),
+//   });
+//
+//   refresh();
+// }
+export const update = (id, isDone ,refresh) => {
+  // only isDone can be updated atm
+  let newTodos = [];
+  JSON.parse(localStorage.getItem('todos')).map((obj) => {
+    let newTodo = { ...obj };
+    if (obj.id == id) {
+      newTodo = {
+        id,
+        name: obj.name,
+        isDone,
+      };
+    }
+    newTodos.push(newTodo);
   });
-
+  localStorage.setItem('todos', JSON.stringify(newTodos))
   refresh();
-}
+};
+
 
 // async function deleteTodo(id, refresh) {
 //   await fetch(`/api/todo/delete?id=${id}`, {
