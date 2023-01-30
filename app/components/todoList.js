@@ -6,15 +6,15 @@ import {useEffect, useState} from "react";
 //   let todos = await fetch("http://localhost:3000/api/todo/list");
 //   return todos.json();
 // };
-const getTodos = () => {
-  return JSON.parse(localStorage.getItem('todos'));
-};
 
 
 export default function TodoList() {
 
   const [todos, setTodos] = useState([]);
   useEffect(() => {
+    const getTodos = () => {
+      return JSON.parse(localStorage.getItem('todos'));
+    };
     setTodos(getTodos())
   }, [JSON.parse(localStorage.getItem('todos'))?.length])
 
@@ -27,8 +27,8 @@ export default function TodoList() {
       <ul style={{listStyleType: "none", padding: 0}}>
         {todos?.map((t) => {
           return (
-            <li key={t.id} style={{ padding: "5px 0" }}>
-              <Todo todo={t} />
+            <li key={t.id} style={{padding: "5px 0"}}>
+              <Todo todo={t}/>
             </li>
           );
         })}
